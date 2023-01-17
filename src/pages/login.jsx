@@ -16,7 +16,7 @@ export default function Login() {
           <input
             data-test="email-input"
             id="email"
-            placeholder="e-mail"
+            placeholder="E-mail"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -27,7 +27,7 @@ export default function Login() {
           <input
             data-test="password-input"
             id="password"
-            placeholder="senha"
+            placeholder="Senha"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
