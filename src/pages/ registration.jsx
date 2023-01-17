@@ -69,13 +69,12 @@ const BodyHome = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 32px;
-    margin-bottom: 25px;
+    margin-top: 28px;
   }
   input {
     height: 58px;
     width: 326px;
-    margin-top: 6px;
+    margin-bottom: 13px;
     border: 1px solid #d4d4d4;
     padding-left: 11px;
     box-sizing: border-box;
@@ -101,8 +100,8 @@ const BodyHome = styled.div`
 
 const Button = styled.button`
   background-color: #a328d6;
+  margin-bottom: 32px;
   border: none;
-  margin-top: 6px;
   height: 46px;
   width: 326px;
   border-radius: 5px;
