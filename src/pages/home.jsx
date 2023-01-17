@@ -4,27 +4,35 @@ import {
   IoIosAddCircleOutline,
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
     <>
       <HeaderHome>
         <h1>
-          Olá, Fulano <Icon />
+          Olá, Fulano
+          <StyledLink to="/">
+            <Icon />
+          </StyledLink>
         </h1>
       </HeaderHome>
       <NavigateHome>
         <h1>Não há registros de entrada ou saída</h1>
       </NavigateHome>
       <ContainerButtons>
-        <button>
-          <IoIosAddCircleOutline />
-          <p>Nova entrada</p>
-        </button>
-        <button>
-          <IoIosRemoveCircleOutline />
-          <p>Nova saída</p>
-        </button>
+        <StyledLink to="/nova-entrada">
+          <button>
+            <IoIosAddCircleOutline />
+            <p>Nova entrada</p>
+          </button>
+        </StyledLink>
+        <StyledLink to="/nova-saida">
+          <button>
+            <IoIosRemoveCircleOutline />
+            <p>Nova saída</p>
+          </button>
+        </StyledLink>
       </ContainerButtons>
     </>
   );
@@ -77,6 +85,7 @@ const ContainerButtons = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 13px 24px 16px 24px;
+
   button {
     width: 155px;
     height: 114px;
@@ -99,4 +108,8 @@ const ContainerButtons = styled.div`
     width: 64px;
     margin-top: 32px;
   }
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #ffffff;
 `;

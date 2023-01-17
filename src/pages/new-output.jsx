@@ -1,3 +1,7 @@
 export default function NewOutput() {
-  return <></>;
+  return (
+    <>
+      <h1>nova saida</h1>
+    </>
+  );
 }
