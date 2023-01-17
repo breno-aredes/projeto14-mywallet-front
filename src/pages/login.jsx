@@ -14,7 +14,6 @@ export default function Login() {
       <form>
         <label htmlFor="email">
           <input
-            data-test="email-input"
             id="email"
             placeholder="E-mail"
             type="email"
@@ -25,7 +24,6 @@ export default function Login() {
         </label>
         <label htmlFor="password">
           <input
-            data-test="password-input"
             id="password"
             placeholder="Senha"
             type="password"
@@ -34,14 +32,10 @@ export default function Login() {
             required
           ></input>
         </label>
-        <Button data-test="login-btn" type="submit">
-          Entrar
-        </Button>
+        <Button type="submit">Entrar</Button>
       </form>
 
-      <StyledLink data-test="signup-link" to="/cadastro">
-        Primeira vez? Cadastre-se!
-      </StyledLink>
+      <StyledLink to="/cadastro">Primeira vez? Cadastre-se!</StyledLink>
     </BodyHome>
   );
 }
