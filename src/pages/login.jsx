@@ -1,17 +1,27 @@
 import styled from "styled-components";
-//import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  function login(e) {
+    e.preventDefault();
+    const url = "http://localhost:5000/login";
+    const data = { email, password };
+
+    const promisse = axios.post(url, data);
+    promisse.then(() => navigate("/home"));
+    promisse.catch((err) => alert(err.response.data));
+  }
 
   return (
     <BodyHome>
-      {/* form onSubmit={login} */}
       <h1>MyWallet</h1>
-      <form>
+      <form onSubmit={login}>
         <label htmlFor="email">
           <input
             id="email"

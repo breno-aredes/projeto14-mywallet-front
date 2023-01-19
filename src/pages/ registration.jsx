@@ -6,12 +6,16 @@ export default function Registration() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  function creatAccount(e) {
+    e.preventDefault();
+  }
 
   return (
     <BodyHome>
-      {/* form onSubmit={creatAccount} */}
       <h1>MyWallet</h1>
-      <form>
+      <form onSubmit={creatAccount}>
         <label htmlFor="name">
           <input
             id="name"
@@ -43,13 +47,13 @@ export default function Registration() {
             required
           ></input>
         </label>
-        <label htmlFor="password">
+        <label htmlFor="confirmPassword">
           <input
-            id="password"
+            id="confirmPassword"
             placeholder="Confirme a senha"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           ></input>
         </label>
