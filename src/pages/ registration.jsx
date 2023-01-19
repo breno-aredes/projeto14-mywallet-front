@@ -1,15 +1,27 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Registration() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   function creatAccount(e) {
     e.preventDefault();
+
+    const url = "http://localhost:5000/sing-up";
+    const data = { name, email, password, confirmPassword };
+
+    const promisse = axios.post(url, data);
+    promisse.then(() => {
+      alert("conta criada");
+      navigate("/");
+    });
+    promisse.catch((err) => alert(err.response.status));
   }
 
   return (
@@ -51,7 +63,7 @@ export default function Registration() {
           <input
             id="confirmPassword"
             placeholder="Confirme a senha"
-            type="confirmPassword"
+            type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
