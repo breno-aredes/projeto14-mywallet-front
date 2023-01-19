@@ -1,11 +1,29 @@
 import styled from "styled-components";
 import { AiOutlineExport } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 export default function NewEntry() {
   const [description, setDescription] = useState("");
-  const [value, setValue] = useState("");
+  let [value, setValue] = useState("");
+  const navigate = useNavigate();
+
+  function newEntry(e) {
+    e.preventDefault();
+
+    if (value) {
+      value = Number(value.replace(",", "."));
+      if (isNaN(value)) return alert("valor não é um numero");
+    }
+
+    const url = "http://localhost:5000/wallet";
+    const data = { description, value, type: "entry" };
+
+    const promisse = axios.post(url, data);
+    promisse.then(() => navigate("/home"));
+    promisse.catch("algo deus errado");
+  }
 
   return (
     <>
@@ -18,7 +36,7 @@ export default function NewEntry() {
         </h1>
       </HeaderHome>
       <BodyEntry>
-        <form>
+        <form onSubmit={newEntry}>
           <label htmlFor="value">
             <input
               id="value"
