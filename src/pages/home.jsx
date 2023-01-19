@@ -5,8 +5,31 @@ import {
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
+  const [wallet, setWallet] = useState([]);
+
+  useEffect(() => {
+    const url = "http://localhost:5000/wallet";
+
+    const promisse = axios.get(url);
+    promisse.then((res) => setWallet(res.data));
+    promisse.catch((err) => console.log(err.response.status));
+  }, []);
+
+  let balance = 0;
+  if (wallet.length > 0) {
+    for (let i = 0; wallet.length > i; i++) {
+      if (wallet[i].type === "entry") {
+        balance += wallet[i].value;
+      } else {
+        balance -= wallet[i].value;
+      }
+    }
+  }
+
   return (
     <>
       <HeaderHome>
@@ -17,9 +40,32 @@ export default function Home() {
           </StyledLink>
         </h1>
       </HeaderHome>
-      <NavigateHome>
-        <h1>Não há registros de entrada ou saída</h1>
-      </NavigateHome>
+      {wallet.length === 0 ? (
+        <NavigateHome>
+          <h1>Não há registros de entrada ou saída</h1>
+        </NavigateHome>
+      ) : (
+        <NavigateList>
+          {wallet.map((w) => (
+            <div key={w._id}>
+              <Date>{w.date}</Date>
+              <Description>{w.description}</Description>
+              <Value type={w.type}>
+                {w.value.toFixed(2).replace(".", ",")}
+              </Value>
+            </div>
+          ))}
+          <Balance>
+            <h1>Saldo</h1>
+            <p>
+              {balance <= 0
+                ? "0,00"
+                : `${balance.toFixed(2).replace(".", ",")}`}
+            </p>
+          </Balance>
+        </NavigateList>
+      )}
+
       <ContainerButtons>
         <StyledLink to="/nova-entrada">
           <button>
@@ -57,6 +103,58 @@ const HeaderHome = styled.header`
 
 const Icon = styled(AiOutlineExport)`
   font-size: 26px;
+`;
+
+const NavigateList = styled.nav`
+  height: 446px;
+  margin-left: 25px;
+  margin-right: 25px;
+  border-radius: 5px;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px 20px 10px;
+  position: relative;
+  div {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const Date = styled.p`
+  color: #c6c6c6;
+  position: fixed;
+`;
+const Description = styled.p`
+  color: #000000;
+  margin-left: 50px;
+  width: 100%;
+`;
+const Value = styled.p`
+  color: ${(props) => (props.type === "entry" ? "#03ac00" : "#C70000")};
+`;
+
+const Balance = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  font-size: 17px;
+  justify-content: space-between;
+  p {
+    margin-right: 25px;
+    line-height: 20px;
+    color: #03ac00;
+  }
+  h1 {
+    font-weight: 700;
+    line-height: 20px;
+  }
 `;
 
 const NavigateHome = styled.nav`
