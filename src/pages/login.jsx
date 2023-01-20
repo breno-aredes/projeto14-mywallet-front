@@ -10,7 +10,7 @@ export default function Login() {
 
   function login(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/login";
+    const url = "http://localhost:5000/sing-in";
     const data = { email, password };
 
     const promisse = axios.post(url, data);
