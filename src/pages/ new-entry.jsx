@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { AiOutlineExport } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import AuthContext from "../context/auth";
 
 export default function NewEntry() {
   const [description, setDescription] = useState("");
   let [value, setValue] = useState("");
   const navigate = useNavigate();
+  const { token } = useContext(AuthContext);
 
   function newEntry(e) {
     e.preventDefault();
@@ -18,9 +20,16 @@ export default function NewEntry() {
     }
 
     const url = "http://localhost:5000/wallet";
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const data = { description, value, type: "entry" };
 
-    const promisse = axios.post(url, data);
+    const promisse = axios.post(url, data, config);
     promisse.then(() => navigate("/home"));
     promisse.catch("algo deus errado");
   }

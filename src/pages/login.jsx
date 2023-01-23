@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import AuthContext from "../context/auth";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const { setToken, setUserName } = useContext(AuthContext);
 
   function login(e) {
     e.preventDefault();
@@ -14,7 +16,11 @@ export default function Login() {
     const data = { email, password };
 
     const promisse = axios.post(url, data);
-    promisse.then(() => navigate("/home"));
+    promisse.then((res) => {
+      setUserName(res.data.name);
+      setToken(res.data.token);
+      navigate("/home");
+    });
     promisse.catch((err) => alert(err.response.data));
   }
 

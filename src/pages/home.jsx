@@ -5,19 +5,27 @@ import {
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import AuthContext from "../context/auth";
 
 export default function Home() {
   const [wallet, setWallet] = useState([]);
+  const { token, userName } = useContext(AuthContext);
 
   useEffect(() => {
     const url = "http://localhost:5000/wallet";
 
-    const promisse = axios.get(url);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const promisse = axios.get(url, config);
     promisse.then((res) => setWallet(res.data));
     promisse.catch((err) => console.log(err.response.status));
-  }, []);
+  }, [token]);
 
   let balance = 0;
   if (wallet.length > 0) {
@@ -34,7 +42,7 @@ export default function Home() {
     <>
       <HeaderHome>
         <h1>
-          Olá, Fulano
+          Olá, {userName}
           <StyledLink to="/">
             <Icon />
           </StyledLink>
