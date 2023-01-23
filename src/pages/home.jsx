@@ -4,17 +4,24 @@ import {
   IoIosAddCircleOutline,
   IoIosRemoveCircleOutline,
 } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import AuthContext from "../context/auth";
 
 export default function Home() {
   const [wallet, setWallet] = useState([]);
-  const { token, userName } = useContext(AuthContext);
+  const { token, setToken, userName } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  function logout() {
+    if (window.confirm("Quer faer logout")) {
+      setToken("");
+      navigate("/");
+    }
+  }
 
   useEffect(() => {
-    //const url = "http://localhost:5000/wallet";
     const url = `${process.env.REACT_APP_API_URL}wallet`;
 
     const config = {
@@ -44,9 +51,9 @@ export default function Home() {
       <HeaderHome>
         <h1>
           Olá, {userName}
-          <StyledLink to="/">
+          <Button onClick={logout}>
             <Icon />
-          </StyledLink>
+          </Button>
         </h1>
       </HeaderHome>
       {wallet.length === 0 ? (
@@ -217,6 +224,10 @@ const ContainerButtons = styled.div`
   }
 `;
 const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #ffffff;
+`;
+const Button = styled.div`
   text-decoration: none;
   color: #ffffff;
 `;
