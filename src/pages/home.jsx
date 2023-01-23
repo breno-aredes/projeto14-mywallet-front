@@ -14,7 +14,8 @@ export default function Home() {
   const { token, userName } = useContext(AuthContext);
 
   useEffect(() => {
-    const url = "http://localhost:5000/wallet";
+    //const url = "http://localhost:5000/wallet";
+    const url = `${process.env.REACT_APP_API_URL}wallet`;
 
     const config = {
       headers: {

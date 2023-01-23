@@ -10,9 +10,13 @@ export default function Login() {
   const navigate = useNavigate();
   const { setToken, setUserName } = useContext(AuthContext);
 
+  console.log(process.env.REACT_APP_API_URL);
+
   function login(e) {
     e.preventDefault();
-    const url = "http://localhost:5000/sing-in";
+
+    const url = `${process.env.REACT_APP_API_URL}sing-in`;
+
     const data = { email, password };
 
     const promisse = axios.post(url, data);

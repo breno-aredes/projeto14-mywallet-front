@@ -13,7 +13,8 @@ export default function Registration() {
   function creatAccount(e) {
     e.preventDefault();
 
-    const url = "http://localhost:5000/sing-up";
+    const url = `${process.env.REACT_APP_API_URL}sing-up`;
+
     const data = { name, email, password, confirmPassword };
 
     const promisse = axios.post(url, data);

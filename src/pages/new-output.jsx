@@ -19,7 +19,8 @@ export default function NewOutput() {
       if (isNaN(value)) return alert("valor não é um numero");
     }
 
-    const url = "http://localhost:5000/wallet";
+    const url = `${process.env.REACT_APP_API_URL}wallet`;
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
